@@ -1,0 +1,124 @@
+{UTF-8}
+capital_depreciation=
+	capital_depreciation_rate_cte*capital_stock
+	~	
+	~		|
+
+capital_depreciation_rate_cte=
+	GET_DIRECT_CONSTANTS( 'model_parameters_example.xlsx' , 'economy' , 'depreciation_rate'\
+		 )
+	~	Dmnl
+	~		|
+
+capital_stock= INTEG (
+	investment-capital_depreciation,
+		1000)
+	~	
+	~		|
+
+Capital_stock_growth_rate_cte=
+	GET_DIRECT_CONSTANTS( 'model_parameters_example.xlsx' , 'economy' , 'k_stock_growth_rate'\
+		 )
+	~	Dmnl
+	~		|
+
+historical_investment_data:INTERPOLATE::=
+	GET_DIRECT_DATA( 'model_parameters_example.xlsx' , 'economy' , 'historical_time' , 'investmente_historical'\
+		 )
+	~	$
+	~		|
+
+investment=
+	IF_THEN_ELSE( Time<2020 , historical_investment_data , Capital_stock_growth_rate_cte\
+		*capital_stock+capital_depreciation )
+	~	
+	~	Capital_stock_growth_rate*capital_stock+capital_depreciation
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL_TIME  = 2030
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL_TIME  = 2015
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME_STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME_STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,capital stock,687,216,60,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,2,48,399,218,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,2,100,0,0,22,0,192,0,-1--1--1,,1|(460,218)|
+1,4,5,1,4,0,0,22,0,192,0,-1--1--1,,1|(575,218)|
+11,5,0,518,218,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,investment,518,248,47,22,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,7,48,986,216,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,8,10,1,100,0,0,22,0,192,0,-1--1--1,,1|(801,216)|
+1,9,10,7,4,0,0,22,0,192,0,-1--1--1,,1|(921,216)|
+11,10,0,861,216,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,11,capital depreciation,861,246,60,22,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,capital depreciation rate cte,987,119,135,43,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,13,historical investment data,361,331,60,22,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,12,11,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,15,1,11,1,0,0,0,0,192,0,-1--1--1,,1|(780,331)|
+1,16,11,6,1,0,0,0,0,64,0,-1--1--1,,1|(688,140)|
+1,17,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(611,257)|
+10,18,Capital stock growth rate cte,383,88,80,18,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,18,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,20,13,6,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,21,Time,518,288,29,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,22,21,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:L<%^E!@
+1:current.vdfx
+4:Time
+5:capital stock
+9:current
+19:100,0
+24:2015
+25:2030
+26:2030
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
